@@ -12,7 +12,7 @@ $(document).ready(function(){
  //  	})
 
  	function getNewGame (category = 9, difficulty = "medium"){
-		var queryURL = "https://opentdb.com/api.php?amount=1&category=" + category + "&difficulty=" + difficulty + "&encode=url3986";
+		var queryURL = "https://opentdb.com/api.php?amount=1&category=" + category + "&difficulty=" + difficulty;
 		console.log("queryURL = " + queryURL);
 		$.ajax({
 			url: queryURL,
@@ -30,15 +30,27 @@ $(document).ready(function(){
 		response.results[0].incorrect_answers.push(this.answer);
 		this.choices = response.results[0].incorrect_answers;
 		console.log("this.choices = " + this.choices);
+		console.log("this.choices[1] = " + this.choices[1]);
 
-		this.update = function()_{
-			$
-		}
- 	}
+		this.update = function() {
+			$("#question").empty();
+			$("#choices").empty();
+			$("#question").text(this.question);
+			this.choices.forEach(function(choice){
+				console.log("choice = " + choice);
+				var radioDiv = $("<input>").attr("type", "radio").attr("class", "optradio");
+				var inputDiv = $("<label>").attr("id", choice).text(choice).append(radioDiv);
+				$("#choices").append(inputDiv);
+			});
+			$("#choices label").wrap("<div class='radio'>");
+		this.update();
+ 		}
  	
 
 
- 	getNewGame();
+ 		getNewGame();
+
+ 	}
 
 	
 });
