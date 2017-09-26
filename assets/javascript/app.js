@@ -39,18 +39,19 @@ $(document).ready(function(){
 			this.choices.forEach(function(choice){
 				console.log("choice = " + choice);
 				var radioDiv = $("<input>").attr("type", "radio").attr("class", "optradio");
-				var inputDiv = $("<label>").attr("id", choice).text(choice).append(radioDiv);
+				var inputDiv = $("<label>").attr("id", choice).text(choice).prepend(radioDiv);
 				$("#choices").append(inputDiv);
 			});
 			$("#choices label").wrap("<div class='radio'>");
-		this.update();
+		
  		}
- 	
+ 		this.update();
 
 
- 		getNewGame();
+ 		
 
  	}
 
-	
+	var currentGame = getNewGame;
+	currentGame();
 });
