@@ -79,7 +79,7 @@ body {
 		font-size: 10px;
 	}
 	#timer, #incorrect, #correct {
-		font-size:8px;
+		font-size:10px;
 	}
 	.btn.btn-info.difficulty-button#easy,
 	.btn.btn-info.difficulty-button#medium,
