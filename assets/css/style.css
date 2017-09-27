@@ -56,8 +56,9 @@ body {
 }
 
 @media screen and (max-width: 640px){
-	.panel {s
+	.panel {
 		min-width:0;
+		max-width:270px;
 	}
 	.btn {
 		min-width:0;
