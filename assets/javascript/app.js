@@ -65,10 +65,11 @@ $(document).ready(function(){
  				incorrect ++;
  				}else{
  				console.log("Incorrect Answer!");
- 				setTimeout(function(){$("#choices").html("<div class='alert alert-success' role='alert'>The correct answer was: " + self.answer + "</div>");},3000)
 				}
+ 				setTimeout(function(){$("#choices").html("<div class='alert alert-success' role='alert'>The correct answer was: " + self.answer + "</div>");},3000)
+				
+			}
 
- 			}
  			console.log("setTimeout");
  			var timeout = setTimeout(nextQuestion, 5000);
  	
