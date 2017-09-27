@@ -15,6 +15,22 @@
 }
 
 .panel {
-	max-width:600px;
+	width:605px;
 	margin-left:33px;
+}
+
+.alert-success {
+	text-align:center;
+	font-size: 60px;
+
+}
+
+.alert-danger {
+	text-align:center;
+	font-size: 60px;
+	
+}
+
+#question {
+	font-size: 24px;
 }

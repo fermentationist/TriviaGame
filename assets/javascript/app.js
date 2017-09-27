@@ -1,68 +1,87 @@
 $(document).ready(function(){
 
- 	var currentGame = null;
+ 	var correct = 0;
+ 	var incorrect = 0;
+ 	var difficulty = "medium";
+ 	var currentGame = getNewGame(difficulty);
+ 	console.log("currentGame initialized : " + currentGame);
 
- 	function getNewGame (category = 9, difficulty = "medium"){
+ 	function getNewGame (difficulty = "medium", category = 9){
 		var queryURL = "https://opentdb.com/api.php?amount=1&category=" + category + "&difficulty=" + difficulty;
 		console.log("queryURL = " + queryURL);
 		$.ajax({
 			url: queryURL,
 			method: "GET"
 		}).done(function (response){
+			delete currentGame;
 			currentGame = new triviaGame (response);
-			return currentGame.startTimer();
+			console.log("currentGame initialized : " + currentGame);
+			currentGame.startTimer();
+			return currentGame;
 		});
 	}
 
 	function triviaGame (response){
 		this.intervalTimer = null;
 		this.counter = 15;
-		this.correct = 0;
-		this.incorrect = 0;
+		// this.correct = 0;
+		// this.incorrect = 0;
 		console.log("response = " + response);
 		this.question = response.results[0].question;
 		this.answer = response.results[0].correct_answer;
-
-		console.log(this.answer);
 		response.results[0].incorrect_answers.push(this.answer);
 		this.choices = response.results[0].incorrect_answers;
-		console.log("this.choices = " + this.choices);
-		console.log("this.choices[1] = " + this.choices[1]);
 
 		this.update = function() {
 			$("#question").empty();
 			$("#choices").empty();
 			$("#question").html(this.question);
-			$("#correct").text(this.correct);
-			$("#incorrect").text(this.incorrect);
+			$("#correct").text(correct);
+			$("#incorrect").text(incorrect);
 			$("#timer").text(this.counter);
 			this.choices.forEach(function(choice){
-				console.log("choice = " + choice);
-				var buttonDiv = $("<button>").attr("type", "button").attr("class", "btn btn-warning list-group-item choice-button").attr("id", choice);
-				$(buttonDiv).text(choice);
+				var buttonDiv = $("<button>").attr("class", "btn btn-default choice-button").attr("id", choice);
+				console.log("button added");
+				$(buttonDiv).html(choice);
 				$("#choices").append(buttonDiv);
 			});
+			$(document).on("click", ".choice-button", function(event){
+				$(document).off();
+		 		submitAnswer(event);
+		 	});
  		}
 
  		this.turnOver = function (isCorrect) {
+ 			var self = this;
  			$(document).off();
  			clearInterval(this.intervalTimer);
- 			if (isCorrect) {
- 				console.log("Correct Answer!");
+ 			if (isCorrect){
+ 				console.log("Correct!");
  			}else{
+ 				if (!isCorrect && this.counter < 1) {
  				console.log("Your Time Is Up!");
+ 				$("#choices").html("<div class='alert alert-danger' role='alert'>Your time is up!</div>");
+ 				incorrect ++;
+ 				}else{
+ 				console.log("Incorrect Answer!");
+ 				setTimeout(function(){$("#choices").html("<div class='alert alert-success' role='alert'>The correct answer was: " + self.answer + "</div>");},3000)
+				}
+
  			}
+ 			console.log("setTimeout");
+ 			var timeout = setTimeout(nextQuestion, 5000);
+ 	
  		}
 
  		this.startTimer = function(){
  			var self = this;
  			var countDown = function(){
- 				console.log(self.counter);
  				if (self.counter < 1){
  					return self.turnOver(false);
  				}
  				self.counter --;
- 				self.update();
+ 				$("#timer").text(self.counter);
+
  			} 			
  			this.intervalTimer = setInterval(countDown,1000);
  			return this.intervalTimer;
@@ -72,31 +91,56 @@ $(document).ready(function(){
  		this.update();
  	}
 
- 	function submitAnswer(event){
-		$(document).off();
-		clearInterval(currentGame.intervalTimer);
- 		var target = (event.target);
- 		var guess = $(target).attr("id");
- 		console.log("you guessed: " + guess);
- 		if (guess === currentGame.answer){
- 			console.log("Correct!");
- 			currentGame.correct ++;
- 		}else{
- 			console.log("Incorrect!");
- 			currentGame.incorrect ++;
- 		}
- 		currentGame.update();
+
+ 	function nextQuestion(){
+ 		console.log("nextQuestion called, this.length = ", this.length);
+ 		$("#choices").empty();
+ 		delete currentGame;
+ 		currentGame = getNewGame(difficulty);
+ 		// console.log("currentGame = " + currentGame);
+ 		// currentGame(difficulty);
+ 		return;
  	}
 
- 	$(document).on("click", ".choice-button", function(event){
- 		$(event.target).addClass("active").siblings().removeClass("active");
- 		submitAnswer(event);
- 	});
+
+ 	function submitAnswer(event){
+ 		$(document).off();
+ 		var win = false;
+ 		var answer = currentGame.answer;
+ 		var target = (event.target);
+ 		var guess = $(target).attr("id");
+ 		if (guess === answer){
+ 			$("#choices").html("<div class='alert alert-success' role='alert'>Correct!!</div>");
+ 			console.log("Correct!");
+ 			correct ++;
+ 			win = true;
+ 		}else{
+ 			$("#choices").html("<div class='alert alert-danger' role='alert'>Wrong!!</div>");
+ 			console.log("Incorrect!");
+ 			incorrect ++;
+ 		}
+ 		currentGame.turnOver(win);
+ 	}
 
  	$(".difficulty-button").on("click",function(event){
  		$(this).addClass("active").siblings().removeClass("active");
+ 		difficulty = $(this).attr("id");
+ 		console.log("difficulty = " + difficulty);
+ 		// $(document).off();
+ 		// currentGame = null;
+ 		// nextQuestion();
  	});
 
-	var currentGame = getNewGame;
-	currentGame();
+ 	$(".navbar-brand").on("click", function(){
+ 		location.reload();
+ 	})
+
+ 	$(".timer").on("click", function (event) {
+ 		console.log("timer clicked!");
+ 		if (currentGame.intervalTimer){
+ 			clearInterval(currentGame.intervalTimer);
+ 			$(document).off();
+ 		}
+ 	});
+
 });
