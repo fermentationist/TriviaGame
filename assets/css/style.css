@@ -1,3 +1,20 @@
 .choice-button {
 	margin-bottom:5px;
 }
+
+.score-button {
+	width:140px;
+}
+
+.badge {
+	margin-left:10px;
+}
+
+.timer {
+	width:80px;
+}
+
+.panel {
+	max-width:600px;
+	margin-left:33px;
+}

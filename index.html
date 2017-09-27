@@ -20,30 +20,36 @@
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Trivia</a>
+		      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
 		    </div>
 				<div class="btn-group btn-group-lg" role="group">
 					<button class="btn btn-info difficulty-button" id="easy">Easy</button>
 					<button class="btn btn-info difficulty-button active" id="medium">Medium</button>
 					<button class="btn btn-info difficulty-button" id="hard">Hard</button>
+<!-- 					<button class="btn btn-primary timer"><span class="glyphicon glyphicon-time" aria-hidden="true"></span><span class="badge" id="timer">0</span></button> -->
 				</div>
-		      	<ul class="nav navbar-right">
+				<div class="btn-group btn-group-lg" role="group">
+					<button class="btn btn-success score-button" id="easy">Correct<span class="badge" id="correct">0</span></button>
+					<button class="btn btn-primary timer"><span class="glyphicon glyphicon-time" aria-hidden="true"></span><span class="badge" id="timer">0</span></button>
+					<button class="btn btn-danger score-button active" id="medium">Incorrect<span class="badge" id="incorrect">0</span></button>
+				</div>
+		      	<!-- <ul class="nav navbar-right">
 			        <li>
-			        	<button class="btn-lg btn-primary score-button" type="button">
-			        	 Correct  <span class="badge" id="correct"></span>
+			        	<button class="btn-lg btn-success score-button" type="button">
+			        	 Correct<span class="badge" id="correct"></span>
 			        	</button>
 			        	<button class="btn-lg btn-danger score-button" type="button">
-			        	 Incorrect  <span class="badge" id="incorrect"></span>
+			        	 Incorrect<span class="badge" id="incorrect"></span>
 			        	</button>
 			        </li>
-		      	</ul>
-		  	</div><!-- /.container-fluid -->
+		      	</ul> -->
+		  </div><!-- /.container-fluid -->
 		</nav>
 			<!-- Container Div -->
-		<div class="container">
+		<div class="container-fluid">
 			
 			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
+				<div class="col-md-6">
 					
 					<div class="panel panel-warning">
 					  <div class="panel-heading">
@@ -70,6 +76,7 @@
 					</div>
 					
 				</div>
+				<div class="col-md-6"></div>
 			</div>
 
 		</div><!-- /.container-fluid -->
