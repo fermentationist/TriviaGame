@@ -7,7 +7,7 @@ $(document).ready(function(){
  	console.log("currentGame initialized : " + currentGame);
 
  	function getNewGame (difficulty = "medium", category = 9){
-		var queryURL = "https://opentdb.com/api.php?amount=1&category=" + category + "&difficulty=" + difficulty;
+		var queryURL = "https://opentdb.com/api.php?amount=1" + "&difficulty=" + difficulty;
 		console.log("queryURL = " + queryURL);
 		$.ajax({
 			url: queryURL,
@@ -30,7 +30,8 @@ $(document).ready(function(){
 		this.question = response.results[0].question;
 		this.answer = response.results[0].correct_answer;
 		response.results[0].incorrect_answers.push(this.answer);
-		this.choices = response.results[0].incorrect_answers;
+		this.unshuffledChoices = response.results[0].incorrect_answers;
+		this.choices = this.unshuffledChoices.sort(function(a, b){return 0.5 - Math.random()});
 
 		this.update = function() {
 			$("#question").empty();

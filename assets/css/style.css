@@ -1,5 +1,8 @@
 .choice-button {
 	margin-bottom:5px;
+	font-size:18px;
+	background-color: #FDF8E1;
+	color:#8F6C31;
 }
 
 .score-button {
@@ -21,16 +24,30 @@
 
 .alert-success {
 	text-align:center;
-	font-size: 60px;
+	font-size: 48px;
 
 }
 
 .alert-danger {
 	text-align:center;
-	font-size: 60px;
+	font-size: 48px;
 	
 }
 
 #question {
 	font-size: 24px;
+}
+
+body {
+	background-color:#F6F6F6;
+}
+
+#thanks {
+	font-size: 9px;
+}
+
+#copyright {
+	text-align: center;
+	font-size:11px;
+	color:#C6CBD2;
 }
