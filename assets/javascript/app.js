@@ -2,7 +2,15 @@ $(document).ready(function(){
 
  	var correct = 0;
  	var incorrect = 0;
- 	var difficulty = "medium";
+
+ 	var correct = sessionStorage.getItem("correct") || 0;
+ 	$("#"+correct).text(correct);
+ 	var incorrect = sessionStorage.getItem("incorrect") || 0;
+ 	$("#"+incorrect).text(incorrect);
+ 	var difficulty = sessionStorage.getItem("difficulty") || "medium";
+ 	$("#"+difficulty).addClass("active").siblings().removeClass("active");
+ 	console.log ("difficulty stored in sessionStorage = " + sessionStorage.getItem("difficulty"));
+
  	var currentGame = getNewGame(difficulty);
  	console.log("currentGame initialized : " + currentGame);
 
@@ -63,6 +71,7 @@ $(document).ready(function(){
  				console.log("Your Time Is Up!");
  				$("#choices").html("<div class='alert alert-danger' role='alert'>Your time is up!</div>");
  				incorrect ++;
+ 				sessionStorage.setItem("incorrect", incorrect);
  				}else{
  				console.log("Incorrect Answer!");
 				}
@@ -115,11 +124,13 @@ $(document).ready(function(){
  			$("#choices").html("<div class='alert alert-success' role='alert'>Correct!!</div>");
  			console.log("Correct!");
  			correct ++;
+ 			sessionStorage.setItem("correct", correct);
  			win = true;
  		}else{
  			$("#choices").html("<div class='alert alert-danger' role='alert'>Wrong!!</div>");
  			console.log("Incorrect!");
  			incorrect ++;
+ 			sessionStorage.setItem("incorrect", incorrect);
  		}
  		currentGame.turnOver(win);
  	}
@@ -128,6 +139,8 @@ $(document).ready(function(){
  		$(this).addClass("active").siblings().removeClass("active");
  		difficulty = $(this).attr("id");
  		console.log("difficulty = " + difficulty);
+ 		sessionStorage.setItem("difficulty", difficulty);
+ 		console.log("difficulty save in sessionStorage:" + sessionStorage.getItem("difficulty"));
  		// $(document).off();
  		// currentGame = null;
  		// nextQuestion();
